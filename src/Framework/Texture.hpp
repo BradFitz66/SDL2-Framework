@@ -41,6 +41,11 @@ public:
         SDL_RenderCopyEx(renderer, texture, NULL, &render_quad, angle, center, flip);
     }
 
+    void Render(SDL_Renderer* renderer, SDL_Rect src_rect, SDL_Rect dst_rect)
+    {
+	SDL_RenderCopy(renderer, texture, &src_rect, &dst_rect);
+    }
+
     int GetWidth()
     {
         return width;
@@ -51,7 +56,7 @@ public:
         return height;
     }
 
-private:
+protected:
     SDL_Texture* texture;
     int width, height;
 

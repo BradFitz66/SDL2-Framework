@@ -3,10 +3,10 @@
 #include <cassert>
 #include <string>
 #include "Framework/Game.hpp"
-#include "Framework/Texture.hpp"
+#include "Framework/Sprite.hpp"
 #include "Framework/Input.hpp"
 struct Player{
-	Texture* texture;
+	Sprite* texture;
 	float x, y;
 };
 
@@ -16,15 +16,24 @@ public:
 	TestGame(int tick_interval = 60) : Game(tick_interval){
 		show_demo_window = new bool(true);
 	}
-	void Update(float dt)
+	void Update(double dt)
 	{
 		//Set the window title to the delta time
-		SDL_SetWindowTitle(window, std::to_string(dt).c_str());	
-		float vertical = input->GetValue("Vertical")/4;
-		float horizontal = input->GetValue("Horizontal")/4;
-		printf("%f %f\n", vertical, horizontal);
-		player->x += horizontal * dt;
-		player->y += vertical * dt;
+		//Convert DT(milliseconds) to FPS
+		float fps = 1 / (dt / 1000);
+		SDL_SetWindowTitle(window, std::to_string(fps).c_str());
+		float vertical = input->GetValue("Vertical");
+		float horizontal = input->GetValue("Horizontal");
+		
+		player->x += horizontal * 128 * dt;
+		player->y += vertical * 128 * dt;
+		
+		if(input->GetValue("ChangeSprite") && change_sprite_timer > change_sprite_time)
+		{
+			player->texture->SetIndex((player->texture->GetIndex() + 1) % 10);
+			change_sprite_timer = 0;
+		}
+		change_sprite_timer += dt;
 	}
 	
 	void Render()
@@ -53,7 +62,7 @@ public:
 	void Load()
 	{
 		player = new Player();
-		player->texture = new Texture(renderer, "Square.png", 25,25);
+		player->texture = new Sprite(0, 5, 10, 10, 32, 32, "SpriteSheetTest.png", renderer);
 		player->x = 0;
 		player->y = 0;
 		
@@ -61,11 +70,14 @@ public:
 
 		input->AddAxis("Vertical", SDL_SCANCODE_S, SDL_SCANCODE_W);
 		input->AddAxis("Horizontal", SDL_SCANCODE_D, SDL_SCANCODE_A);
+		input->AddButton("ChangeSprite", SDL_SCANCODE_SPACE);
 	}
 private:
 	bool* show_demo_window;
 	Player* player;
 	InputManager* input;
+	float change_sprite_timer = 0;
+	float change_sprite_time = 0.5f;
 };
 
 int main(int argc,char** argv)
