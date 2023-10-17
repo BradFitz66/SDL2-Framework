@@ -28,7 +28,7 @@ public:
 
 	virtual void Update(double dt) = 0;
 	virtual void Render() = 0;
-	virtual void HandleEvents(SDL_Event event) = 0;
+	virtual void HandleEvents(SDL_Event event,ImGuiIO& io) = 0;
 	virtual void Clean() = 0;
 	virtual void Load() = 0;
 
@@ -87,15 +87,14 @@ public:
 			dt = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
 			if (SDL_PollEvent(&event)) {
 				ImGui_ImplSDL2_ProcessEvent(&event);
-				HandleEvents(event);
+				HandleEvents(event, io);
 				// Update axis and buttons
 				if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
 					// Convert the event to a keyboard event
 					SDL_KeyboardEvent event_keyboard = event.key;
 					InputManager::GetSingleton()->Update(event_keyboard);
 				}
-			}
-			printf("Delta: %d\n", clock.delta);
+			}						
 			// Update
 			Update(dt / 1000);
 					
@@ -114,7 +113,7 @@ public:
 			glClear(GL_COLOR_BUFFER_BIT);
 			 
 			Render();
-			 
+			//SDL_RenderPresent(renderer); 
 			// Render draw data
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 			SDL_GL_SwapWindow(window);
