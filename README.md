@@ -4,7 +4,7 @@ A basic SDL2 framework. Currently a proof-of-concept. Has some basic texture and
 
 Might be a PITA to use on your own machine. CMake will need to point to wherever SDL2 is installed on your system. Windows only? (I'm pretty new to C++ and even newer to "manual" build systems like cmake etc).
 
-compile_flags.txt is for CoC on neovim so it knows what the include paths are. This should point to wherever the include directory are on your machine for SDL2/SDL2_image.
+compile_flags.txt is for CoC on neovim so it knows what the include paths are. This should point to wherever the include directory are on your machine for SDL2/SDL2_image etc
 
 
 # Why?
