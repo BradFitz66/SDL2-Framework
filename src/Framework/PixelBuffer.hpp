@@ -1,8 +1,9 @@
-#pragma once
+#ifndef PIXELBUFFER_HPP
+#define PIXELBUFFER_HPP
 
 #include <SDL.h>
 #include <SDL_image.h>
-
+#include <iostream>
 class PixelBuffer
 {
 public:
@@ -25,8 +26,12 @@ public:
 
 	void SetPixel(int x, int y, uint32_t color)
 	{
+		//Make sure we are in bounds
+		if (x < 0 || x >= width || y < 0 || y >= height)
+			return;
+
 		pixels[y * width + x] = color;
-		UpdateTexture();
+		dirty = true;
 	}
 	
 	
@@ -40,12 +45,20 @@ public:
 	{
 		for (int i = 0; i < width * height; i++)
 			pixels[i] = color;
-		UpdateTexture();
+
+		dirty = true;
 	}
 
 	void Render(SDL_Rect* dest)
 	{
+		if (dirty)
+		{
+			UpdateTexture();
+			dirty = false;
+		}
 		SDL_RenderCopy(renderer, texture, NULL, dest);
+
+
 	}
 
 private:
@@ -55,16 +68,23 @@ private:
 	SDL_Texture* texture;
 	SDL_Renderer* renderer;
 	SDL_Rect* src;
+	bool dirty = false;
 
 	void UpdateTexture()
 	{
-		int32_t pitch = 0;
 
+
+
+		int32_t pitch = 0;	
 		if(!SDL_LockTexture(texture, NULL, (void**)&pixels, &pitch))
 		{
 			pitch /= sizeof(uint32_t);
+
 			SDL_UnlockTexture(texture);
 		}
-
+		else{
+			printf("Error locking texture: %s\n", SDL_GetError());
+		}
 	}
 };
+#endif

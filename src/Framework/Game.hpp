@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_HPP
+#define GAME_HPP
 #include <SDL.h>
 #include <SDL_opengl.h>
 
@@ -32,6 +33,7 @@ public:
 	virtual void Clean() = 0;
 	virtual void Load() = 0;
 
+
 	void Run() {
 		// Initialize SDL
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -48,7 +50,7 @@ public:
 		SDL_GetCurrentDisplayMode(0, &current);
 
 		// Create window
-		window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+		window = SDL_CreateWindow("SDL Framework", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
 															640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 						);
 		if (window == NULL)
@@ -70,7 +72,7 @@ public:
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		if (renderer == NULL)
 			std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
-		
+
 		//SDL enable vsync
 		//SDL_RenderSetVSync(renderer,1);
 
@@ -113,8 +115,6 @@ public:
 			glClear(GL_COLOR_BUFFER_BIT);
 			 
 			Render();
-			//SDL_RenderPresent(renderer); 
-			// Render draw data
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 			SDL_GL_SwapWindow(window);
 		
@@ -143,3 +143,4 @@ protected:
 	SDL_Window* window = NULL;
 };
 
+#endif

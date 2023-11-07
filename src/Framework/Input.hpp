@@ -1,5 +1,6 @@
 //Class for handling input
-#pragma once
+#ifndef INPUT_HPP
+#define INPUT_HPP
 #include <map>
 #include "SDL.h"
 #include <stdexcept>
@@ -89,3 +90,4 @@ protected:
 	std::map<SDL_Scancode, std::function<void()>> actions;
 	std::map<std::string, Input*> inputs;
 };
+#endif

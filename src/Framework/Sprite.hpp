@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
+
 #include <SDL.h>
 #include <iostream>
 #include "Texture.hpp"
@@ -80,3 +82,4 @@ private:
 	int width, height; //Width and height of the sprite in the world
 };
 
+#endif
