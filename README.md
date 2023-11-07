@@ -1,18 +1,29 @@
 # SDL2 Framework
+A basic SDL2 framework meant for games. Mostly created as practice for learning C++. There's most likely a lot of mistakes.
 
-A basic SDL2 framework. Currently a proof-of-concept. Has some basic texture and ImGui rendering.
+Current feature list:
+* Texture rendering (basic wrapper over SDL2_Image)
+* Sprite rendering (render sprites from a sprite sheet. Built ontop of the Texture class)
+* Tilemap rendering (renders tilemaps from the software Tiled)
 
-Might be a PITA to use on your own machine. CMake will need to point to wherever SDL2 is installed on your system. Windows only? (I'm pretty new to C++ and even newer to "manual" build systems like cmake etc).
 
-compile_flags.txt is for CoC on neovim so it knows what the include paths are. This should point to wherever the include directory are on your machine for SDL2/SDL2_image etc
+# Building
+There is no official support from me on how to build this project beyond basic instructions (mostly because it's a mess and I'm not adept with build systems like this yet) 
+
+Building this project requires:
+* [CMake](https://cmake.org/)
+* [MinGW](https://www.mingw-w64.org/) (project is setup to use MinGW makefiles)
+* [TMXLite](https://github.com/fallahn/tmxlite)
+* [SDL2](https://github.com/libsdl-org/SDL)
+
+My cmake cache(?) looks like this:
+![image](https://github.com/BradFitz66/SDL2-Framework/assets/28825575/93d8350c-4aef-4e2c-a932-2b8ac6e5b970)
 
 
-# Why?
+The code, as it is, is setup to render a basic tilemap which is not included with this repository.
+[You should remove or replace any references to 'tilemap' inside main.cpp in order to build this](https://github.com/BradFitz66/SDL2-Framework/blob/main/src/main.cpp#L66)
 
-I need to have some examples of my proficency in C++ on my portfolio website. Making my own game framework using SDL2 and then probably also a small game using my own game framework is the best thing I can think of. I chose this over making something in Unreal Engine for a few reasons:
 
-* I feels it shows a wider range of knowledge with certain C++ concepts than it would with UE
-* I can also learn build systems like CMake while doing this
 
 # Licensing stuff
-This project uses imgui (unmodified) for debug and UI purposes and ships it inside thirdparty/imgui
+This project uses imgui (unmodified) for debug and UI purposes and includes it inside thirdparty/imgui
