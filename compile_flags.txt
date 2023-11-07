@@ -1,8 +1,0 @@
--I
-C:/Users/badfi/Workspace/C++/Libraries/SDL2-2.28.4/SDL/include/SDL2
-
--I
-C:/Users/badfi/Workspace/C++/Libraries/SDL2_image-2.6.3/x86_64-w64-mingw32/include/SDL2
-
--I
-C:/Users/badfi/Workspace/C++/Projects/SDL2_Framework/thirdparty/imgui

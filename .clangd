@@ -1,4 +1,0 @@
-CompileFlags: # Tweak the parse settings
-  Add: 
-    - "-I=[C:/Users/badfi/Workspace/C++/Libraries/SDL2-2.28.4/SDL/include]"
-    - "-I=[C:/Users/badfi/Workspace/C++/Libraries/tmxlite-1.4.4/tmxlite/include/tmxlite]"
