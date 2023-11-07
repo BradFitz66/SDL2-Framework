@@ -13,3 +13,6 @@ I need to have some examples of my proficency in C++ on my portfolio website. Ma
 
 * I feels it shows a wider range of knowledge with certain C++ concepts than it would with UE
 * I can also learn build systems like CMake while doing this
+
+# Licensing stuff
+This project uses imgui (unmodified) for debug and UI purposes and ships it inside thirdparty/imgui
