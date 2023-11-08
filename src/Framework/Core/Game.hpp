@@ -6,10 +6,12 @@
 #include <iostream>
 #include <chrono>
 
-#include "Input.hpp"
-#include "imgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_sdl2.h"
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl2.h>
+
+#include "../IO/Input.hpp"
+#include "../Graphics/Transform.hpp"
 
 struct Clock{
 	uint32_t last_tick_time = 0;
@@ -32,7 +34,7 @@ public:
 	virtual void HandleEvents(SDL_Event event,ImGuiIO& io) = 0;
 	virtual void Clean() = 0;
 	virtual void Load() = 0;
-
+	//Global transform stack
 
 	void Run() {
 		// Initialize SDL
@@ -74,8 +76,8 @@ public:
 			std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
 
 		//SDL enable vsync
-		//SDL_RenderSetVSync(renderer,1);
-
+		SDL_RenderSetVSync(renderer,1);
+			
 		Load();
 		// Calculate delta time using std::chrono
 		Uint32 last = SDL_GetPerformanceCounter();
@@ -98,7 +100,7 @@ public:
 				}
 			}						
 			// Update
-			Update(dt / 1000);
+			Update(dt / 1000.0);
 					
 
 			// Render
@@ -141,6 +143,8 @@ protected:
 	SDL_Event event;
 	SDL_Renderer* renderer = NULL;
 	SDL_Window* window = NULL;
+	//Instance
+	Game* instance = NULL;
 };
 
 #endif

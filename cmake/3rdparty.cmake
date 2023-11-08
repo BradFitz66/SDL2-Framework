@@ -11,5 +11,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Linux)
 endif ()
 
 include(cmake/imgui.cmake)
+include(cmake/Vector3D.cmake)
+
 
 

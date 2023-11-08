@@ -6,7 +6,7 @@
 //Texture class for drawing images  
 #include <cassert>
 #include <string>
-#include "SDL_image.h"
+#include <SDL_image.h>
 
 class Texture
 {

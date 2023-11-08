@@ -1,19 +1,29 @@
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 project(SDL2_Test VERSION 1.0.0 LANGUAGES CXX)
+#Use C++20
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+
 include(cmake/3rdparty.cmake)
+include(FindPkgConfig)
 
 
-INCLUDE(FindPkgConfig)
+#Define different linker flags for debug and release
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+	set(CMAKE_EXE_LINKER_FLAGS "-mwindows -Wl,-subsystem,console")
+elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
+	set(CMAKE_EXE_LINKER_FLAGS "-mwindows -Wl,-subsystem,windows -O3")
+else()
+	set(CMAKE_BUILD_TYPE "Debug")
+	set(CMAKE_EXE_LINKER_FLAGS "-mwindows -Wl,-subsystem,console")
+endif()
 
-
-#Linker flags
 set(CMAKE_EXE_LINKER_FLAGS "-mwindows -Wl,-subsystem,console")
 
 #Add entire src directory recursively (both .cpp and .h files)c
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.hpp")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 find_package(TMXLITE REQUIRED)
 PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
